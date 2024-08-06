@@ -1,0 +1,74 @@
+ <script>
+
+     const form = document.getElementById('contact-form');
+
+     const submitButton = document.getElementById('submit-button');
+
+
+
+     submitButton.addEventListener('click', function (event) {
+
+         event.preventDefault();
+
+         const name = document.getElementById('name-field').value;
+
+         const email = document.getElementById('email-field').value;
+
+         const subject = document.getElementById('subject-field').value;
+
+         const message = document.getElementById('message-field').value;
+
+
+
+         const redirectUrl = `mailto:shasaxena321@gmail.com?subject=${subject}&body=${message}`;
+
+
+
+         window.location.href = redirectUrl;
+
+     });
+const subject = document.getElementById("subject").value;
+const message = document.getElementById("message").value;
+							 fetch('/send-email', {
+  method: 'POST',
+  body: JSON.stringify({ subject, message, recipientEmail: 'email@bssm.limited' }),
+  headers: { 'Content-Type': 'application/json' }
+})
+.then(response => response.json())
+.then(data => {
+  // Handle success response (e.g., show a success message)
+})
+.catch(error => {
+  // Handle errors (e.g., display an error message)
+});
+							 
+ // server-side code (Node.js)
+const nodemailer = require('nodemailer');
+
+// ... (other code)
+
+app.post('/send-email', (req, res) => {
+  const { subject, message, recipientEmail } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    // your email service configuration
+  });
+
+  const mailOptions = {
+    from: 'shailinya.saxena@gmail.com',
+    to: 'shailinya.saxena@gmail.com',
+    subject: ENQUIRY.,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);   
+
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.send('Email sent successfully');
+    }
+  });
+});
+ </script>
